@@ -7,12 +7,12 @@ def draw_board(board):
     print('  12345678')
     print(' +--------+')
     for y in range(HEIGTH):
-        print('%s|'% (y+1), end=' ')
+        print('%s|'% (y+1), end='')
         for x in range(WIDTH):
-            print(board[x][y], end=' ')
-        print('%s|'% (y+1))
-        print(' +--------+')
-        print('  12345678')
+            print(board[x][y], end='')
+        print('|%s'% (y+1))
+    print(' +--------+')
+    print('  12345678')
 
 def get_new_board():
     #crea un board vacío
