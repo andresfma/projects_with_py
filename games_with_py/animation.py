@@ -1,6 +1,9 @@
 import pygame, sys, time
 from pygame.locals import *
 
+#set up pygame
+pygame.init()
+
 #set up the windows
 WINDOWWIDTH = 400
 WINDOWHEIGHT = 400
@@ -46,37 +49,38 @@ while True:
         if b['dir'] == DOWNRIGHT:
             b['rect'].left += MOVESPEED
             b['rect'].top += MOVESPEED
-        if b['dir'] == UPRIGHT:
-            b['rect'].left += MOVESPEED
-            b['rect'].top -= MOVESPEED
         if b['dir'] == UPLEFT:
             b['rect'].left -= MOVESPEED
             b['rect'].top -= MOVESPEED
+        if b['dir'] == UPRIGHT:
+            b['rect'].left += MOVESPEED
+            b['rect'].top -= MOVESPEED
+        
 
         #chech whether tho box has moved out of the window
         if b['rect'].top < 0:
             if b['dir'] == UPLEFT:
-                b['dir'] == DOWNLEFT
+                b['dir'] = DOWNLEFT
             if b['dir'] == UPRIGHT:
-                b['dir'] == DOWNRIGHT
+                b['dir'] = DOWNRIGHT
         
         if b['rect'].left < 0:
             if b['dir'] == UPLEFT:
-                b['dir'] == UPRIGHT
+                b['dir'] = UPRIGHT
             if b['dir'] == DOWNLEFT:
-                b['dir'] == DOWNRIGHT
+                b['dir'] = DOWNRIGHT
 
         if b['rect'].right > WINDOWWIDTH:
             if b['dir'] == UPRIGHT:
-                b['dir'] == UPLEFT
+                b['dir'] = UPLEFT
             if b['dir'] == DOWNRIGHT:
-                b['dir'] == DOWNLEFT
+                b['dir'] = DOWNLEFT
 
         if b['rect'].bottom > WINDOWHEIGHT:
             if b['dir'] == DOWNRIGHT:
-                b['dir'] == UPRIGHT
+                b['dir'] = UPRIGHT
             if b['dir'] == DOWNLEFT:
-                b['dir'] == UPLEFT
+                b['dir'] = UPLEFT
         
         #draw the box onto the surface
         pygame.draw.rect(windowSurface, b['color'], b['rect'])
