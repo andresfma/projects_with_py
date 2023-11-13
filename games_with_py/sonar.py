@@ -2,12 +2,12 @@ import random
 import sys
 
 def dibujar_tablero(tablero):
-    linea_hor = '   '
+    linea_hor = '    '
     for i in range(1, 6):
         linea_hor += (' ' * 9) + str(i)
     #numeros superiores
     print(linea_hor)
-    print('    ' + ('0123456789' * 6))
+    print('   ' + ('0123456789' * 6))
     print()
 
     #filas
@@ -21,7 +21,7 @@ def dibujar_tablero(tablero):
 
     #imprimir los numeros a lo largo del borde inferior
     print()
-    print('    ' + ('0123456789' * 6))
+    print('   ' + ('0123456789' * 6))
     print(linea_hor)
 
 def obtener_fila(tablero, fila):
@@ -48,11 +48,11 @@ def obtener_cofres(num_cofres):
     cofres = []
     for i in range(num_cofres):
         cofres.append([random.randint(0, 59), random.randint(0, 14)])
-        return cofres
+    return cofres
 
 def movimiento_valido(x, y):
     #devuelve True si el moviento del usuario esta dentro de las coordenadas
-    return x >= 0 and x <=59 and y >= 0 and y <= 14
+    return x >= 0 and x <= 59 and y >= 0 and y <= 14
 
 def realizar_movimiento(tablero, cofres, x, y):
     #cambia el tablero mostrando un número del radar,
@@ -73,17 +73,18 @@ def realizar_movimiento(tablero, cofres, x, y):
         if distancia < menor_distancia:
             menor_distancia = distancia #buscando el cofre más cercano
         
-        if menor_distancia == 0:
-            #x,y coinciden con un cofre
-            tablero.remove([x, y])
-            return 'Encontraste un cofre, ¡¡ bien hecho !!'
+    if menor_distancia == 0:
+        #x,y coinciden con un cofre
+        print([x, y])
+        cofres.remove([x, y])
+        return 'Encontraste un cofre, ¡¡ bien hecho !!'
+    else:
+        if menor_distancia < 10:
+            tablero[x][y] = str(menor_distancia)
+            return 'Tesoro detectado a una distancia %s del sonar.' %(menor_distancia)
         else:
-            if menor_distancia < 10:
-                tablero[x][y] = str(menor_distancia)
-                return 'Tesoro detectado a una distancia %s del sonar.' %(menor_distancia)
-            else:
-                tablero[x][y] = '0'
-                return 'El sonar no ha detectado nada. Todos los cofres estan fuera de rango'
+            tablero[x][y] = '0'
+            return 'El sonar no ha detectado nada. Todos los cofres estan fuera de rango'
 
 def ingresar_movimiento():
     print('Ingresa las coordenadas deseadas. x(0-59), y(0-14) (o teclea salir)')
@@ -94,7 +95,7 @@ def ingresar_movimiento():
             sys.exit()
         
         movimiento = movimiento.split()
-        if len(movimiento) == 2 and movimiento[0].isdigit() and movimiento[1].isdigit() and movimiento_valido(int(movimiento[0], int(movimiento[1]))):
+        if len(movimiento) == 2 and movimiento[0].isdigit() and movimiento[1].isdigit() and movimiento_valido(int(movimiento[0]), int(movimiento[1])):
             return [int(movimiento[0]), int(movimiento[1])]
         print('Ingresa un número de 0 a 59, un espacio, y luego un número de 0 a 14')
 
